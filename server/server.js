@@ -2,6 +2,7 @@ import "./config/env.js";
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import addressRouter from "./routes/shop/address-routes.js";
 import connectDB from "./db/index.js";
 
 import adminProductsRouter from "./routes/admin/products-routes.js";
@@ -47,3 +48,4 @@ app.use('/api/auth', authRouter);
 app.use('/api/admin/products', adminProductsRouter);
 app.use('/api/shop/products', shopProductRouter);
 app.use('/api/shop/carts',cartRouter);
+app.use('/api/shop/address',addressRouter);
