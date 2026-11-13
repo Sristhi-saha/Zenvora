@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
 
 function ProductImageUpload({
   imageFile,
@@ -37,6 +38,9 @@ function ProductImageUpload({
 
   function handleRemoveImage() {
     setImageFile(null);
+    if (setUploadedImageUrl) {
+      setUploadedImageUrl("");
+    }
     if (inputRef.current) {
       inputRef.current.value = "";
     }
@@ -51,12 +55,22 @@ function ProductImageUpload({
         "http://localhost:5000/api/admin/products/upload-image",
         data
       );
-      if (response) {
-        console.log(response);
-        setUploadedImageUrl(response.data);
+      if (response?.data?.success) {
+        const url =
+          response.data.imageUrl ||
+          response.data?.result?.url ||
+          response.data?.result?.secure_url;
+        setUploadedImageUrl(url);
+        toast.success("Image uploaded successfully");
+      } else {
+        toast.error(response?.data?.message || "Failed to upload image");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Image upload error:", error);
+      toast.error(
+        error?.response?.data?.message || "Image upload failed. Check Cloudinary settings."
+      );
+      if (setUploadedImageUrl) setUploadedImageUrl("");
     } finally {
       if (setImageLoading) setImageLoading(false);
     }

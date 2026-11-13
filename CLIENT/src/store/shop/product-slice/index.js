@@ -30,3 +30,6 @@ const shopProductSlice = createSlice({
         })
     }
 })
+
+
+export default shopProductSlice.reducer;

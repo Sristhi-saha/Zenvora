@@ -1,19 +1,20 @@
 <div align="center">
 
-# 🛒 E-Commerce App
+# 🎓 Zenvora — Open CS Notes & AI Study Companion
 
-**A full-stack MERN e-commerce platform with a customer storefront and a powerful admin dashboard.**
+**A 100% free, full-stack MERN platform built for Computer Science & Engineering students to discover topper-curated notes, practice with exam cheat sheets, and chat directly with PDFs using Google Gemini AI.**
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-Rolldown-646CFF?logo=vite&logoColor=white)
 ![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-2.x-764ABC?logo=redux&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=nodedotjs&logoColor=white)
-![Express](https://img.shields.io/badge/Express-4-000000?logo=express&logoColor=white)
+![Express](https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/Google_Gemini-1.5_Flash-8E75C2?logo=google&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-[Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [API](#-api-reference) • [Roadmap](#-roadmap)
+[Overview](#-overview) • [User & Data Flow](#-end-to-end-system-flow) • [Features](#-core-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [API](#-api-reference) • [Roadmap](#-roadmap)
 
 </div>
 
@@ -21,383 +22,250 @@
 
 ## 📖 Table of Contents
 
-- [About](#-about)
-- [Screenshots](#-screenshots)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Environment Variables](#-environment-variables)
-- [API Reference](#-api-reference)
-- [Product Filters](#-product-filters)
-- [Troubleshooting](#-troubleshooting)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-- [License](#-license)
+- [📌 Overview](#-overview)
+- [🔄 End-to-End System Flow](#-end-to-end-system-flow)
+- [✨ Core Features](#-core-features)
+- [🤖 AI Integration](#-ai-features-powered-by-gemini)
+- [🧰 Tech Stack](#-tech-stack)
+- [📁 Project Structure](#-project-structure)
+- [🚀 Getting Started](#-getting-started)
+- [🔑 Environment Variables](#-environment-variables)
+- [📡 API Reference](#-api-reference)
+- [🗺️ Roadmap](#-roadmap)
+- [👤 Author](#-author)
 
 ---
 
-## 📌 About
+## 📌 Overview
 
-This project is a complete online shopping platform. Customers can browse, filter, search, review and buy products, while admins manage the catalog and orders from a dedicated dashboard.
+**Zenvora** is an open-access academic platform engineered specifically for Computer Science & Engineering students. Instead of hoarding study material or locking knowledge behind paywalls, Zenvora democratizes semester exam prep, GATE preparation, and coding interview readiness.
 
-It demonstrates:
-- Role-based authentication (user and admin)
-- Global state management with Redux Toolkit
-- A config-driven filter system
-- REST API design with Express and Mongoose
-- A modern UI built with Tailwind CSS v4 and shadcn/ui
+Students can browse topper-curated notes across core CS pillars (DSA, OS, DBMS, Networks, System Design), save materials to their personal study queue, read PDFs in-browser, and **chat directly with their notes using Google Gemini AI** for instant concept explanations and auto-generated quizzes.
 
 ---
 
-## 📸 Screenshots
+## 🔄 End-to-End System Flow
 
-> Add your own screenshots to a `/screenshots` folder and update the paths below.
+Here is the complete architectural and user journey through Zenvora:
 
-| Home | Product Listing |
-| :---: | :---: |
-| ![Home](./screenshots/home.png) | ![Listing](./screenshots/listing.png) |
-
-| Product Details | Cart |
-| :---: | :---: |
-| ![Details](./screenshots/details.png) | ![Cart](./screenshots/cart.png) |
-
-| Checkout | Admin Dashboard |
-| :---: | :---: |
-| ![Checkout](./screenshots/checkout.png) | ![Admin](./screenshots/admin.png) |
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           1. DISCOVERY & LANDING                            │
+│  • Student visits /shop/home (Zenvora aesthetic neo-brutalist hero)         │
+│  • Selects a CS pillar (DSA, OS, DBMS, Networks, System Design, AI/ML)       │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          2. CATALOG & FREE PREVIEW                          │
+│  • /shop/listing loads filtered notes from MongoDB via Redux               │
+│  • Student views note cards (ratings, tags, contributor, preview)           │
+│  • Clicks "Save to Study Queue" (dispatches addToCart Redux thunk)          │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         3. STUDY QUEUE (CART DRAWER)                        │
+│  • Real-time sliding Sheet drawer from Navbar                               │
+│  • Displays queued notes, removes duplicates, calculates zero-cost summary  │
+│  • Student clicks "Add to My Saved Library"                                 │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                   4. MY DIGITAL LIBRARY & IN-BROWSER READER                 │
+│  • Student opens /shop/account (Personal Study Vault)                       │
+│  • Selects any saved PDF note for full-screen clean reading                 │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      5. GOOGLE GEMINI 1.5 FLASH AI SUITE                    │
+│  • "Ask AI": Student asks questions directly to the PDF in real-time        │
+│  • "Practice Quiz": Gemini analyzes the note and generates 5 MCQs           │
+│  • "Auto-Summary": 3-bullet concept breakdown for fast revision             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## ✨ Features
+## ✨ Core Features
 
-### 🛍️ Customer Storefront
-| Feature | Description |
-| --- | --- |
-| **Home page** | Banners, featured products and category shortcuts |
-| **Product listing** | Grid view with sorting and multi-filter sidebar |
-| **Advanced filters** | Category, brand, price range, rating, discount, size, color, availability |
-| **Product details** | Dialog with images, description, price and reviews |
-| **Search** | Keyword search with instant results |
-| **Cart** | Add, remove and update quantities with a live total |
-| **Checkout** | Address selection and order placement |
-| **Account** | Profile, saved addresses and order history |
-| **Reviews** | Star ratings and written reviews on purchased products |
+### 🎓 For Students (100% Free & Open)
+- **Aesthetic Retro Interface**: Warm `#FAF8F5` paper canvas with `Redaction 35` typography, custom selection indicators, and tactile drop-shadow cards.
+- **6 Core CS Subject Channels**:
+  - 🧠 **DSA & LeetCode**: Trees, Graphs, DP patterns, Big-O cheat sheets.
+  - 💻 **Operating Systems**: Processes, Concurrency, Virtual Memory, Linux internals.
+  - 🗄️ **DBMS & SQL**: Relational algebra, Normalization, Transactions, NoSQL.
+  - 🌐 **Computer Networks**: OSI stack, TCP/IP, Sockets, HTTP/HTTPS, Routing.
+  - 🏗️ **System Design & Web Dev**: Scalability, Microservices, Caching, REST.
+  - 🤖 **AI & Machine Learning**: Math for ML, Neural Nets, Python foundations.
+- **Study Queue & Bookmarks**: Save notes in one click and access them anytime.
+- **In-Browser Reader**: Read PDFs without downloading bloated third-party tools.
 
-### 🔧 Admin Dashboard
-| Feature | Description |
-| --- | --- |
-| **Product management** | Create, edit, delete and list products |
-| **Image upload** | Upload product images from the admin form |
-| **Order management** | View all orders and update their status |
-| **Sidebar layout** | Dedicated admin navigation and header |
+### ✍️ For Contributors & Community
+- **Crowdsourced Uploads**: Students can upload their handwritten or typed notes.
+- **Cloudinary Storage**: Secure, high-speed PDF and thumbnail delivery.
+- **Admin Control Center**: Review uploads, verify syllabus accuracy, and manage tags.
 
-### 🔐 Authentication and Security
-- Sign up and sign in with validation
-- Role-based protected routes (admin and user)
-- Persistent sessions
-- Toast notifications for success and error feedback
+---
+
+## 🤖 AI Features (Powered by Gemini)
+
+| Feature | How It Works |
+| :--- | :--- |
+| 💬 **"Chat with Note"** | Sends the PDF text + user doubt to `/api/ai/chat`. Gemini 1.5 Flash explains formulas, code blocks, or algorithms step-by-step. |
+| ⚡ **Instant Quiz Generator** | One click generates 5 gate/exam-style multiple choice questions with answers and hints. |
+| 📝 **Smart Summarizer** | Extracts the top 3 high-yield takeaways from any chapter for 5-minute pre-exam revision. |
 
 ---
 
 ## 🧰 Tech Stack
 
-### Frontend
-| Technology | Purpose |
-| --- | --- |
-| React 19 | UI library |
-| Vite (rolldown-vite) | Fast dev server and bundler |
-| Redux Toolkit + React Redux | Global state management |
-| React Router DOM 7 | Client-side routing |
-| Tailwind CSS 4 | Utility-first styling |
-| shadcn/ui + Radix UI | Accessible UI components (dialog, select, label) |
-| Axios | HTTP client |
-| Sonner | Toast notifications |
-| Lucide React | Icons |
-| next-themes | Theme support |
+### Frontend Architecture
+- **React 19** with **Vite (Rolldown)** for instant HMR
+- **Redux Toolkit & React Redux** for predictable global state (auth, notes, queue)
+- **React Router DOM v7** with declarative nested route layouts (`<Outlet />`)
+- **Tailwind CSS v4** & **shadcn/ui** (Sheet, Dialog, Select, Dropdown, Sonner toasts)
+- **Lucide React** for modern developer icons
+- **Google Fonts**: `Redaction 35` (headlines) & `Nunito Sans` (body)
 
-### Backend
-| Technology | Purpose |
-| --- | --- |
-| Node.js + Express | Server and REST API |
-| MongoDB Atlas + Mongoose | Database and ODM |
-| dotenv | Environment configuration |
-| nodemon | Auto-restart in development |
+### Backend Architecture
+- **Node.js & Express 5** REST API
+- **MongoDB Atlas & Mongoose 9** with subdocument schemas & `.populate()` joins
+- **Google Gemini 1.5 Flash API** for document reasoning (free tier)
+- **Cloudinary SDK** for media & PDF storage
+- **JWT & Cookie-Parser** for secure HTTP-only session management
 
 ---
 
 ## 📁 Project Structure
 
 ```
-E_Commerce_App/
-├── client/                      # React frontend
+Zenvora/
+├── CLIENT/                      # React frontend
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── admin-view/      # Admin header, sidebar, product tiles
-│   │   │   ├── shopping-view/   # Header, product tile, cart, filters
-│   │   │   ├── common/          # Shared form, route guards
-│   │   │   └── ui/              # shadcn/ui components
+│   │   │   ├── shopping-view/   # Header, Study Queue Drawer, Note Tile, Filter
+│   │   │   ├── auth/            # AuthLayout with unified theme
+│   │   │   ├── common/          # CommonForm, Route guards (CheckAuth)
+│   │   │   └── ui/              # shadcn/ui components (Sheet, Button, Input)
 │   │   ├── pages/
-│   │   │   ├── admin-view/      # Dashboard, products, orders
-│   │   │   ├── shopping-view/   # Home, listing, checkout, account, search
-│   │   │   └── auth/            # Sign in, sign up
-│   │   ├── store/               # Redux slices (auth, products, cart, ...)
-│   │   ├── config/              # Filter options, form controls
-│   │   └── App.jsx
+│   │   │   ├── shopping-view/   # Home, Note Listing, Library, Checkout
+│   │   │   ├── admin-view/      # Note Upload portal, Catalog management
+│   │   │   └── auth/            # Login, Register
+│   │   ├── store/               # Redux slices (auth, notes, cart/queue, address)
+│   │   ├── config/              # CS categories, form controls, navbar links
+│   │   └── App.jsx              # Main routing architecture
 │   └── package.json
 │
 └── server/                      # Express backend
-    ├── controllers/             # Request handlers
-    ├── models/                  # Mongoose schemas
-    ├── routes/                  # API routes
-    ├── db/                      # Database connection
-    ├── server.js                # Entry point
-    └── .env                     # Environment variables (not committed)
+    ├── controllers/             # Business logic (cart, notes, auth, ai)
+    ├── models/                  # Mongoose models (Cart, Product/Note, User)
+    ├── routes/                  # Express routers (/api/shop/carts, /api/auth, etc)
+    ├── helpers/                 # Cloudinary & Gemini AI service helpers
+    ├── db/                      # MongoDB connection handler
+    └── server.js                # Server entry point
 ```
-
-> Adjust folder names to match your actual project.
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) 18 or higher
-- [MongoDB Atlas](https://www.mongodb.com/atlas) account (or a local MongoDB install)
-- npm or yarn
+- [Node.js](https://nodejs.org/) 18+ installed
+- [MongoDB Atlas](https://www.mongodb.com/atlas) cluster URL
+- [Cloudinary](https://cloudinary.com/) account (for PDF uploads)
+- [Google AI Studio](https://aistudio.google.com/) Gemini API Key (Free)
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/<your-username>/E_Commerce_App.git
+git clone https://github.com/Sristhi-saha/E_Commerce_App.git
 cd E_Commerce_App
 ```
 
-### 2. Set up the backend
+### 2. Configure Backend (`server/.env`)
 ```bash
 cd server
 npm install
 ```
-Create `server/.env` (see [Environment Variables](#-environment-variables)), then run:
+
+Create `server/.env`:
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_atlas_connection_string
+JWT_SECRET=your_secret_session_key
+CLIENT_URL=http://localhost:5173
+CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+CLOUDINARY_API_KEY=your_cloudinary_key
+CLOUDINARY_API_SECRET=your_cloudinary_secret
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+Start the backend:
 ```bash
 npm run dev
 ```
-You should see: `MongoDB connected` and `Server running on port 5000`.
 
-### 3. Set up the frontend
+### 3. Configure Frontend (`CLIENT`)
 ```bash
-cd client
+cd ../CLIENT
 npm install
 npm run dev
 ```
-Open **http://localhost:5173** in your browser.
-
-### Available scripts (client)
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start the development server |
-| `npm run build` | Create a production build |
-| `npm run preview` | Preview the production build locally |
-| `npm run lint` | Run ESLint |
-
----
-
-## 🔑 Environment Variables
-
-### Server (`server/.env`)
-| Variable | Example | Description |
-| --- | --- | --- |
-| `PORT` | `5000` | Port the API runs on |
-| `MONGODB_URI` | `mongodb+srv://user:pass@cluster0.xxxxx.mongodb.net/ecommerce` | MongoDB connection string |
-| `JWT_SECRET` | `a_long_random_string` | Secret used to sign tokens |
-| `CLIENT_URL` | `http://localhost:5173` | Allowed CORS origin |
-
-```env
-PORT=5000
-MONGODB_URI=mongodb+srv://myuser:MyPass123@cluster0.xxxxx.mongodb.net/ecommerce?retryWrites=true&w=majority
-JWT_SECRET=change_this_to_a_long_random_string
-CLIENT_URL=http://localhost:5173
-```
-
-> ⚠️ Never commit your `.env` file. Add it to `.gitignore`.
+Open **`http://localhost:5173`** in your browser.
 
 ---
 
 ## 📡 API Reference
 
-> Example routes. Update them to match your backend.
-
-### Auth
+### Study Notes (Catalog)
 | Method | Endpoint | Description |
-| --- | --- | --- |
-| POST | `/api/auth/register` | Create a new account |
-| POST | `/api/auth/login` | Sign in |
-| POST | `/api/auth/logout` | Sign out |
-| GET | `/api/auth/check-auth` | Verify the current session |
+| :--- | :--- | :--- |
+| `GET` | `/api/shop/products` | Fetch all notes with category & price filters |
+| `GET` | `/api/shop/products/:id` | Fetch specific note details and preview pages |
 
-### Products (Shop)
+### Study Queue (Saved Notes)
 | Method | Endpoint | Description |
-| --- | --- | --- |
-| GET | `/api/shop/products` | List products (supports filter query params) |
-| GET | `/api/shop/products/:id` | Get product details |
-| GET | `/api/shop/search/:keyword` | Search products |
+| :--- | :--- | :--- |
+| `GET` | `/api/shop/carts/get/:userId` | Retrieve user's study queue |
+| `POST` | `/api/shop/carts/add` | Save a note to study queue |
+| `PUT` | `/api/shop/carts/updateCart` | Update quantity or status |
+| `DELETE`| `/api/shop/carts/:userId/:productId` | Remove a note from queue |
 
-### Cart
+### AI Study Suite
 | Method | Endpoint | Description |
-| --- | --- | --- |
-| GET | `/api/shop/cart/:userId` | Get cart items |
-| POST | `/api/shop/cart` | Add item to cart |
-| PUT | `/api/shop/cart` | Update item quantity |
-| DELETE | `/api/shop/cart/:userId/:productId` | Remove item |
-
-### Orders, Address and Reviews
-| Method | Endpoint | Description |
-| --- | --- | --- |
-| POST | `/api/shop/order` | Create an order |
-| GET | `/api/shop/order/list/:userId` | User order history |
-| POST | `/api/shop/address` | Add an address |
-| POST | `/api/shop/review` | Add a product review |
-
-### Admin
-| Method | Endpoint | Description |
-| --- | --- | --- |
-| POST | `/api/admin/products` | Add a product |
-| PUT | `/api/admin/products/:id` | Edit a product |
-| DELETE | `/api/admin/products/:id` | Delete a product |
-| GET | `/api/admin/orders` | List all orders |
-| PUT | `/api/admin/orders/:id` | Update order status |
-
----
-
-## 🎛️ Product Filters
-
-Filters are **config-driven**. The sidebar is rendered from a single object, so adding a new filter needs no new UI code.
-
-```js
-export const filters = {
-  ProductFilter: {
-    category: {
-      key: "category",
-      label: "Category",
-      type: "checkbox",
-      options: [
-        { label: "Electronics", value: "electronics" },
-        { label: "Fashion", value: "fashion" },
-      ],
-    },
-    price: {
-      key: "price",
-      label: "Price",
-      type: "radio",
-      options: [
-        { label: "Under ₹500", value: "0-500" },
-        { label: "₹500 - ₹1,000", value: "500-1000" },
-      ],
-    },
-  },
-};
-```
-
-Selected filters are sent to the API as query params:
-
-```
-GET /api/shop/products?category=electronics,fashion&minPrice=500&maxPrice=5000&sort=price_asc
-```
-
----
-
-## 🛠️ Troubleshooting
-
-<details>
-<summary><b>MongoParseError: Invalid scheme, expected connection string to start with "mongodb://"</b></summary>
-
-The `MONGODB_URI` is missing, empty or malformed. Check that:
-- The variable name in `.env` matches `process.env.MONGODB_URI` in your code
-- There are no quotes or spaces around the value
-- The string starts with `mongodb+srv://` or `mongodb://`
-</details>
-
-<details>
-<summary><b>MongoServerError: bad auth : Authentication failed</b></summary>
-
-The username or password is wrong. Check that:
-- You are using the **Database Access** user, not your Atlas login
-- `<password>` was replaced, including the angle brackets
-- Special characters in the password are URL-encoded (`@` becomes `%40`, `#` becomes `%23`)
-- Your IP address is allowed in **Network Access**
-</details>
-
-<details>
-<summary><b>Changes in <code>.env</code> are not picked up</b></summary>
-
-nodemon does not restart on `.env` changes by default. Type `rs` in the terminal or restart the server.
-</details>
-
-<details>
-<summary><b>CORS errors in the browser</b></summary>
-
-Make sure `CLIENT_URL` in the server `.env` matches the frontend URL exactly, and that CORS is configured with `credentials: true` if you use cookies.
-</details>
+| :--- | :--- | :--- |
+| `POST` | `/api/ai/chat` | Send a query to Gemini with note context |
+| `POST` | `/api/ai/generate-quiz` | Auto-generate 5 practice MCQs from a note |
+| `POST` | `/api/ai/summarize` | Generate high-yield bullet takeaways |
 
 ---
 
 ## 🗺️ Roadmap
 
-### 🤖 AI Features
-- [ ] AI shopping assistant chatbot
-- [ ] Natural language search (for example "black running shoes under ₹3000")
-- [ ] Personalized recommendations
-- [ ] AI-generated product descriptions for admins
-- [ ] Review summarization (pros and cons)
-- [ ] Visual search (find similar products from an image)
-- [ ] AI size and fit advisor
-
-### 🛒 Commerce
-- [ ] Wishlist
-- [ ] Coupons and promo codes
-- [ ] Order tracking timeline
-- [ ] Email notifications
-- [ ] Multiple payment methods (UPI, cards, COD)
-- [ ] Returns and refunds
-- [ ] Product variants with per-variant stock
-- [ ] Recently viewed products
-
-### ⚙️ Platform
-- [ ] Admin analytics dashboard (sales, revenue, top products)
-- [ ] Low-stock alerts
-- [ ] Pagination or infinite scroll
-- [ ] Dark mode
-- [ ] Unit and integration tests
-- [ ] CI/CD and deployment (Vercel for client, Render for server)
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome.
-
-1. Fork the repository
-2. Create a branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m "Add amazing feature"`
-4. Push the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for details.
+- [x] Full-Stack JWT Authentication & Protected Routes
+- [x] Redux Toolkit Study Queue Drawer with Live Sync
+- [x] MongoDB Schemas with Populated Mongoose Relationships
+- [x] Zenvora Neo-Brutalist Academic Landing Page (`#FAF8F5`)
+- [x] Core CS Subject Routing (DSA, OS, DBMS, Networks)
+- [ ] In-Browser PDF Reader with Dark Mode & Zoom
+- [ ] Google Gemini 1.5 Flash "Chat with Note" Sidebar
+- [ ] AI Multiple-Choice Practice Quiz Modal
+- [ ] Community Upload Portal with Cloudinary PDF Parser
 
 ---
 
 ## 👤 Author
 
-**Your Name**
-- GitHub: [@sristhi-saha](https://github.com/sristhi-saha)
+**Sristhi Saha**
+- GitHub: [@sristhi-saha](https://github.com/Sristhi-saha)
 - LinkedIn: [sristhi-saha](https://linkedin.com/in/sristhi-saha)
 
 ---
 
 <div align="center">
 
-⭐ If you found this project useful, please give it a star!
+⭐ If you find **Zenvora** helpful for your studies, give it a star on GitHub!
 
 </div>

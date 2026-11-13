@@ -36,6 +36,8 @@ const AdminProducts = () => {
   const [imageFile, setImageFile] = useState(null);
   const [currentEditedID, setCurrentEditedID] = useState(null);
   const [edit, setEdit] = useState(false);
+
+  console.log("imageurl",imageFile);
   
   // 1. Keep uploadedImageUrl consistently as a string or object
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
@@ -186,7 +188,7 @@ const AdminProducts = () => {
               formData={formData}
               setFormData={setFormData}
               formControls={addProductsFromElements}
-              isBtnDisabled={!isFormValid()}
+              isBtnDisabled={!isFormValid() || imageLoading}
             />
           </div>
         </SheetContent>

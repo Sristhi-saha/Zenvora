@@ -108,36 +108,25 @@ export const menuItemShoppingView = [
   {
     id:"home",
     label:"Home",
-    path:"/shop/home"
+    path:"/"
   },
   {
-    id:"women",
-    label:"women",
-    path:"/shop/listing"
+    id:"All Notes",
+    label:"All Notes",
+    path:"/listing"
+  },
+  
+  {
+    id:"contribute",
+    label:"Contribute",
+    path:"/contribute"
   },
   {
-    id:"footware",
-    label:"women",
-    path:"/shop/listing"
+    id:"saved",
+    label:"Saved",
+    path:"/saved"
   },
-  {
-    id:"accessories",
-    label:"women",
-    path:"/shop/listing"
-  },
-  {
-    id:"kids",
-    label:"kids",
-    path:"/shop/listing"
-  },
-  {
-    id:"men",
-    label:"men",
-    path:"/shop/listing"
-  },
-  {
-    
-  }
+  
 ]
 
 

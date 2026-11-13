@@ -15,7 +15,7 @@ import NotFound from './pages/not-found/index.jsx'
 import Home from './pages/shopping-view/Home.jsx'
 import Listing from './pages/shopping-view/Listing.jsx'
 import Account from './pages/shopping-view/account.jsx'
-import Checkout from './pages/shopping-view/checkout.jsx'
+import Checkout from './pages/shopping-view/contribute.jsx'
 import CheckAuth from './components/common/check-auth.jsx'
 import UnAuthPages from './pages/unauth-pages/index.jsx'
 import { Skeleton } from "@/components/ui/skeleton"
@@ -44,7 +44,6 @@ const App = () => {
         <Route path="/auth" element={
           <CheckAuth isAuthenticated={isAuthenticated} user={user}>
             <div>
-              <h1 className='text-2xl font-bold text-center mt-4'>E-Commerce Application</h1>
               <AuthLayout />
             </div>
           </CheckAuth>
@@ -64,20 +63,19 @@ const App = () => {
           <Route path="products" element={<AdminProducts />} />
         </Route>
         
-        <Route path='/shop' element={
-          <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-            <div>
+        <Route path='/' element={
+         <div>
               <ShoppingViewLayout />
             </div>
-          </CheckAuth>
+          
         }>
-          <Route path='home' element={<Home />} />
+          <Route path='' element={<Home />} />
           <Route path='listing' element={<Listing />} />
           <Route path='account' element={<Account />} />
           <Route path='checkout' element={<Checkout />} />
+          <Route path='*' element={<NotFound />} />
         </Route>
         
-        <Route path='/unauth-page' element={<UnAuthPages />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
