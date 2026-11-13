@@ -29,17 +29,19 @@ const App = () => {
   }, [dispatch])
 
   if (isLoading) {
-    return <div className="flex items-center space-x-4">
-      <Skeleton className="h-12 w-12 rounded-full" />
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-['50px']" />
-        <Skeleton className="h-4 w-['600px']" />
+    return (
+      <div className="flex items-center space-x-4 p-8">
+        <Skeleton className="h-12 w-12 rounded-full" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-[150px]" />
+          <Skeleton className="h-4 w-[300px]" />
+        </div>
       </div>
-    </div>
+    )
   }
-  
+
   return (
-    <div className='flex flex-col overflow-hidden bg-white'>
+    <div className='flex flex-col min-h-screen overflow-hidden bg-[#FAF8F5] dark:bg-[#0C0C0C] text-[#1C1C1C] dark:text-gray-100 transition-colors'>
       <Routes>
         <Route path="/auth" element={
           <CheckAuth isAuthenticated={isAuthenticated} user={user}>
@@ -51,7 +53,7 @@ const App = () => {
           <Route path="login" element={<Authlogin />} />
           <Route path="register" element={<Authregister />} />
         </Route>
-        
+
         <Route path='/admin' element={
           <CheckAuth isAuthenticated={isAuthenticated} user={user}>
             <AdminLayout />
@@ -62,21 +64,42 @@ const App = () => {
           <Route path="orders" element={<AdminOrders />} />
           <Route path="products" element={<AdminProducts />} />
         </Route>
-        
-        <Route path='/' element={
-         <div>
-              <ShoppingViewLayout />
-            </div>
-          
-        }>
+
+        {/* Shopping / Notes Platform Routes */}
+        <Route path='/' element={<ShoppingViewLayout />}>
+          {/* 1. Public Route: Anyone can view the landing page */}
           <Route path='' element={<Home />} />
-          <Route path='listing' element={<Listing />} />
-          <Route path='account' element={<Account />} />
-          <Route path='checkout' element={<Checkout />} />
+
+          {/* 2. Protected Routes: Must be logged in to access */}
+          <Route 
+            path='listing' 
+            element={
+              <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+                <Listing />
+              </CheckAuth>
+            } 
+          />
+          <Route 
+            path='account' 
+            element={
+              <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+                <Account />
+              </CheckAuth>
+            } 
+          />
+          <Route 
+            path='checkout' 
+            element={
+              <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+                <Checkout />
+              </CheckAuth>
+            } 
+          />
+
+          {/* 3. 404 Fallback */}
           <Route path='*' element={<NotFound />} />
         </Route>
-        
-        <Route path="*" element={<NotFound />} />
+
       </Routes>
     </div>
   )

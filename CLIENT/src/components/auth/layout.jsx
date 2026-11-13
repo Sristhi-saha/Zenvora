@@ -63,14 +63,14 @@ function AuthLayout() {
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
+            {/* <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
                 <Users className="w-4 h-4" />
               </div>
               <span className="text-sm font-semibold text-gray-800">
                 Join 5,000+ CS students contributing to the open library
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
 
