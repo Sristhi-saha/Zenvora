@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎓 Zenvora — Open CS Notes & AI Study Companion
+# 🛒 E-Commerce App
 
 **A 100% free, full-stack MERN platform built for Computer Science & Engineering students to discover topper-curated notes, practice with exam cheat sheets, and chat directly with PDFs using Google Gemini AI.**
 
