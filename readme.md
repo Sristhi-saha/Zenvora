@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛒 E-Commerce App
+# Zenvora
 
 **A 100% free, full-stack MERN platform built for Computer Science & Engineering students to discover topper-curated notes, practice with exam cheat sheets, and chat directly with PDFs using Google Gemini AI.**
 
