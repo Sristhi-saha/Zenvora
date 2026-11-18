@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -24,6 +25,7 @@ function ProductDetailsDialog({
   handleAddToCart,
 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // 👈 Resets Redux state when the dialog closes
   function handleDialogClose() {
@@ -102,13 +104,25 @@ function ProductDetailsDialog({
               </div>
 
               {/* Action Buttons */}
-              <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-gray-800">
+              <div className="space-y-2.5 pt-4 border-t border-gray-100 dark:border-gray-800">
                 <Button
+                  onClick={() => {
+                    handleDialogClose();
+                    navigate(`/study/${productDetails?._id}`);
+                  }}
+                  className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl border-2 border-emerald-700 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  Open in Study Mode & AI Copilot
+                </Button>
+
+                <Button
+                  variant="outline"
                   onClick={() => {
                     handleAddToCart(productDetails?._id);
                     handleDialogClose();
                   }}
-                  className="w-full py-3.5 bg-[#1C1C1C] dark:bg-white text-white dark:text-[#111111] hover:bg-black dark:hover:bg-gray-200 font-bold text-sm rounded-xl border-2 border-gray-900 dark:border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-white dark:bg-[#1E1E1E] text-gray-900 dark:text-white hover:bg-gray-50 font-bold text-xs rounded-xl border border-gray-300 dark:border-gray-700 cursor-pointer flex items-center justify-center gap-2"
                 >
                   <BookmarkCheck className="w-4 h-4" />
                   Save to My Study Queue

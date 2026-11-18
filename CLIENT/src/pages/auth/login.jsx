@@ -6,8 +6,12 @@ import { useDispatch } from "react-redux";
 import { loginUserAction, googleAuthAction } from "@/store/auth-slice";
 import { toast } from "sonner";
 import { GoogleLogin } from "@react-oauth/google";
+import { useTheme } from "next-themes";
 
 const AuthLogin = () => {
+  // 1. Hook must be declared inside the component body
+  const { theme } = useTheme();
+
   const initialState = {
     email: "",
     password: "",
@@ -16,7 +20,7 @@ const AuthLogin = () => {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
 
-  // 1. Email + Password Submit Handler
+  // 2. Email + Password Submit Handler
   function onSubmit(e) {
     e.preventDefault();
 
@@ -29,7 +33,7 @@ const AuthLogin = () => {
     });
   }
 
-  // 2. Google OAuth Success Handler
+  // 3. Google OAuth Success Handler
   function handleGoogleSuccess(credentialResponse) {
     if (credentialResponse.credential) {
       dispatch(googleAuthAction(credentialResponse.credential)).then((data) => {
@@ -82,14 +86,15 @@ const AuthLogin = () => {
       </div>
 
       {/* Google OAuth Button */}
-      <div className="flex justify-center w-full">
+      <div className="w-full flex justify-center [&>div]:w-full [&>div>iframe]:!w-full [&>div>iframe]:!rounded-xl">
         <GoogleLogin
           onSuccess={handleGoogleSuccess}
           onError={() => toast.error("Google Sign-In failed")}
-          theme="outline"
-          shape="pill"
+          theme={theme === "dark" ? "filled_black" : "outline"}
+          shape="rectangular"
           size="large"
           width="100%"
+          
         />
       </div>
     </div>

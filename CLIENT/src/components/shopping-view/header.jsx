@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BookOpen, Menu, ShoppingCart, LogOut, UserCheck, Sun, Moon } from "lucide-react";
+import { BookOpen, Menu, Bookmark, LogOut, UserCheck, Sun, Moon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import {
@@ -21,9 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { menuItemShoppingView } from "@/config";
 import { logoutUserAction } from "@/store/auth-slice";
 import { fetchCartItems } from "@/store/shop/cart-slice";
-import UserCartWrapper from "./cart-wrapper";
 import { useTheme } from "next-themes";
-import { Bookmark } from "lucide-react";
 
 // 1. Navigation Menu Links
 function MenuItems({ setOpen }) {
@@ -116,7 +114,6 @@ function HeaderRightContent() {
   const { cartproductList } = useSelector(
     (state) => state.shopCart || state.cartProducts || {}
   );
-  const [openCartSheet, setOpenCartSheet] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const navigate = useNavigate();
@@ -156,13 +153,14 @@ function HeaderRightContent() {
         </Button>
       )}
 
-      {/* 🔖 Study Queue / Cart Sheet Trigger */}
-      {/* <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
+      {/* 🔖 Saved Library Quick Bookmark Link */}
+      {isAuthenticated && (
         <Button
-          onClick={() => setOpenCartSheet(true)}
+          onClick={() => navigate("/account")}
           variant="outline"
           size="icon"
           className="relative rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1A1A1A] hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer shadow-sm"
+          title="My Saved Library"
         >
           <Bookmark className="w-4 h-4 text-[#1C1C1C] dark:text-gray-200" />
           {cartproductList && cartproductList.length > 0 && (
@@ -170,14 +168,9 @@ function HeaderRightContent() {
               {cartproductList.length}
             </span>
           )}
-          <span className="sr-only">Study queue</span>
+          <span className="sr-only">Saved Library</span>
         </Button>
-
-        <UserCartWrapper
-          cartItems={cartproductList}
-          setOpenCartSheet={setOpenCartSheet}
-        />
-      </Sheet> */}
+      )}
 
       {/* User Avatar with Dropdown */}
       {isAuthenticated ? (

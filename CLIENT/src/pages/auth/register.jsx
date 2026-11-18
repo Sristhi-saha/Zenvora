@@ -6,8 +6,10 @@ import { useDispatch } from "react-redux";
 import { registerUserAction, googleAuthAction } from "@/store/auth-slice";
 import { toast } from "sonner";
 import { GoogleLogin } from "@react-oauth/google";
+import { useTheme } from "next-themes";
 
 const AuthRegister = () => {
+  const { theme } = useTheme();
   const initialState = {
     username: "",
     email: "",
@@ -82,14 +84,15 @@ const AuthRegister = () => {
       </div>
 
       {/* Google OAuth Button */}
-      <div className="flex justify-center w-full">
+      <div className="w-full flex justify-center [&>div]:w-full [&>div>iframe]:!w-full [&>div>iframe]:!rounded-xl">
         <GoogleLogin
           onSuccess={handleGoogleSuccess}
           onError={() => toast.error("Google Sign-Up failed")}
-          theme="outline"
-          shape="pill"
+          theme={theme === "dark" ? "filled_black" : "outline"}
+          shape="rectangular"
           size="large"
           width="100%"
+          text="continue_with"
         />
       </div>
     </div>

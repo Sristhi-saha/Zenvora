@@ -155,7 +155,7 @@ const Listing = () => {
             <span>OPEN ACADEMIC CS REPOSITORY</span>
           </div>
 
-          {/* <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#1C1C1C] dark:text-white leading-[1.2]">
+          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#1C1C1C] dark:text-white leading-[1.2]">
             Explore Verified{" "}
             <span className="relative inline-block border-2 border-[#22C55E] text-[#16A34A] dark:text-[#4ADE80] px-3 py-0.5 rounded-sm font-mono mx-1 bg-green-50/60 dark:bg-green-950/40">
               <span className="absolute -top-1.5 -left-1.5 w-2 h-2 bg-[#22C55E] rounded-full ring-2 ring-[#FAF8F5] dark:ring-[#0C0C0C]" />
@@ -163,7 +163,7 @@ const Listing = () => {
               <span className="absolute -bottom-1.5 -right-1.5 w-2 h-2 bg-[#22C55E] rounded-full ring-2 ring-[#FAF8F5] dark:ring-[#0C0C0C]" />
             </span>{" "}
             Notes
-          </h1> */}
+          </h1>
 
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl">
             Topper-curated lecture notes, algorithm cheat sheets, and solved semester questions — 100% free and open-access.

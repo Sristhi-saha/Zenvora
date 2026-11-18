@@ -55,9 +55,9 @@ const Account = () => {
     });
   }
 
-  // 4. Open Note Details / Reader
+  // 4. Open Note in Study Reader & AI Copilot
   function handleOpenNote(productId) {
-    dispatch(fetchProductDetails(productId));
+    navigate(`/study/${productId}`);
   }
 
   return (

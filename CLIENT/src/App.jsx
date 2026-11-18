@@ -16,6 +16,7 @@ import Home from './pages/shopping-view/Home.jsx'
 import Listing from './pages/shopping-view/Listing.jsx'
 import Account from './pages/shopping-view/account.jsx'
 import Checkout from './pages/shopping-view/contribute.jsx'
+import StudyReader from './pages/shopping-view/study.jsx'
 import CheckAuth from './components/common/check-auth.jsx'
 import UnAuthPages from './pages/unauth-pages/index.jsx'
 import { Skeleton } from "@/components/ui/skeleton"
@@ -92,6 +93,14 @@ const App = () => {
             element={
               <CheckAuth isAuthenticated={isAuthenticated} user={user}>
                 <Checkout />
+              </CheckAuth>
+            } 
+          />
+          <Route 
+            path='study/:id' 
+            element={
+              <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+                <StudyReader />
               </CheckAuth>
             } 
           />
