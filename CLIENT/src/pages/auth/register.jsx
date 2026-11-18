@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import  {registerFormControls}  from "../../config/index";
+import { Link, useNavigate } from "react-router-dom";
+import { registerFormControls } from "../../config/index";
 import CommonForm from "../../components/common/form";
 import { useDispatch } from "react-redux";
-import { registerUserAction } from "@/store/auth-slice";
-import { useNavigate } from "react-router-dom";
+import { registerUserAction, googleAuthAction } from "@/store/auth-slice";
 import { toast } from "sonner";
+import { GoogleLogin } from "@react-oauth/google";
 
 const AuthRegister = () => {
   const initialState = {
@@ -17,36 +18,46 @@ const AuthRegister = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
+  // 1. Standard Register Submit Handler
   function onSubmit(e) {
     e.preventDefault();
-    console.log(formData);
-    dispatch(registerUserAction(formData)).then((data)=>{
-      console.log(data);
-      if(data?.payload?.success) {
+    dispatch(registerUserAction(formData)).then((data) => {
+      if (data?.payload?.success) {
         toast.success(data?.payload?.message || "Registration successful!");
-        navigate('/auth/login');
+        navigate("/auth/login");
       } else {
         toast.error(data?.payload?.message || "Registration failed");
       }
-      navigate('/auth/login');
     });
   }
 
+  // 2. Google OAuth Success Handler
+  function handleGoogleSuccess(credentialResponse) {
+    if (credentialResponse.credential) {
+      dispatch(googleAuthAction(credentialResponse.credential)).then((data) => {
+        if (data?.payload?.success) {
+          toast.success("Welcome to Zenvora!");
+        } else {
+          toast.error(data?.payload?.message || "Google signup failed");
+        }
+      });
+    }
+  }
+
   return (
-    <div className="mx-auto w-full max-w-md space-y-8">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Create new Account
+    <div className="mx-auto w-full max-w-md space-y-6">
+      <div className="text-center space-y-2">
+        <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+          Create Account
         </h1>
-        <p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           Already have an account?{" "}
-          <a
-            href="/auth/login"
-            className="text-blue-800 hover:underline"
+          <Link
+            to="/auth/login"
+            className="font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
           >
-            Login please
-          </a>
+            Sign in
+          </Link>
         </p>
       </div>
 
@@ -55,8 +66,32 @@ const AuthRegister = () => {
         formControls={registerFormControls}
         setFormData={setFormData}
         onSubmit={onSubmit}
-        buttonText="Register"
+        buttonText="Sign Up"
       />
+
+      {/* "Or continue with" Divider */}
+      <div className="relative my-6">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-200 dark:border-gray-800" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase font-mono">
+          <span className="bg-white dark:bg-[#141414] px-3 text-gray-400">
+            Or continue with
+          </span>
+        </div>
+      </div>
+
+      {/* Google OAuth Button */}
+      <div className="flex justify-center w-full">
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={() => toast.error("Google Sign-Up failed")}
+          theme="outline"
+          shape="pill"
+          size="large"
+          width="100%"
+        />
+      </div>
     </div>
   );
 };

@@ -3,39 +3,49 @@ import axios from "axios";
 
 export const initialState = {
     isAuthenticated: false,
-    isLoading: true, //
+    isLoading: true,
     user: null
-}
+};
 
 export const registerUserAction = createAsyncThunk('/auth/register',
-    async(FormData) => {
+    async (FormData) => {
         const response = await axios.post('http://localhost:5000/api/auth/register', FormData, {
             withCredentials: true
         });
         return response.data;
     }
-)
+);
 
 export const loginUserAction = createAsyncThunk('/auth/login',
-    async(FormData) => {
+    async (FormData) => {
         const response = await axios.post('http://localhost:5000/api/auth/login', FormData, {
             withCredentials: true
         });
         return response.data;
     }
-)
+);
+
+// 👈 Google OAuth Action
+export const googleAuthAction = createAsyncThunk('/auth/google',
+    async (credential) => {
+        const response = await axios.post('http://localhost:5000/api/auth/google', { credential }, {
+            withCredentials: true
+        });
+        return response.data;
+    }
+);
 
 export const logoutUserAction = createAsyncThunk('/auth/logout',
-    async(FormData) => {
+    async (FormData) => {
         const response = await axios.post('http://localhost:5000/api/auth/logout', FormData, {
             withCredentials: true
         });
         return response.data;
     }
-)
+);
 
 export const checkAuthAction = createAsyncThunk('/auth/checkauth',
-    async() => {
+    async () => {
         const response = await axios.get('http://localhost:5000/api/auth/check-auth', {
             withCredentials: true,
             headers: {
@@ -45,7 +55,7 @@ export const checkAuthAction = createAsyncThunk('/auth/checkauth',
         });
         return response.data;
     }
-)
+);
 
 const authSlice = createSlice({
     name: "auth",
@@ -83,7 +93,21 @@ const authSlice = createSlice({
                 state.user = action.payload.success ? action.payload.user : null;
                 state.isAuthenticated = action.payload.success;
             })
-           .addCase(checkAuthAction.pending, (state) => {
+            // 👈 Handle Google Auth in Redux
+            .addCase(googleAuthAction.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(googleAuthAction.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = action.payload.success ? action.payload.user : null;
+                state.isAuthenticated = action.payload.success;
+            })
+            .addCase(googleAuthAction.rejected, (state) => {
+                state.isLoading = false;
+                state.user = null;
+                state.isAuthenticated = false;
+            })
+            .addCase(checkAuthAction.pending, (state) => {
                 state.isLoading = true;
             })
             .addCase(checkAuthAction.fulfilled, (state, action) => {
@@ -101,7 +125,6 @@ const authSlice = createSlice({
                 state.user = null;
                 state.isAuthenticated = false;
             });
-
     }
 });
 

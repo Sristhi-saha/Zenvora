@@ -23,6 +23,7 @@ import { logoutUserAction } from "@/store/auth-slice";
 import { fetchCartItems } from "@/store/shop/cart-slice";
 import UserCartWrapper from "./cart-wrapper";
 import { useTheme } from "next-themes";
+import { Bookmark } from "lucide-react";
 
 // 1. Navigation Menu Links
 function MenuItems({ setOpen }) {
@@ -62,7 +63,7 @@ function MobileProfilePart({ setOpen }) {
 
   if (!isAuthenticated) {
     return (
-      <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+      <div className="p-4 border-t border-gray-200 dark:border-gray-800">
         <Link to="/auth/login" onClick={() => setOpen && setOpen(false)} className="w-full">
           <Button className="w-full bg-[#1C1C1C] hover:bg-black dark:bg-white dark:text-black dark:hover:bg-gray-200 text-white rounded-xl font-bold">
             Login
@@ -73,7 +74,7 @@ function MobileProfilePart({ setOpen }) {
   }
 
   return (
-    <div className="pt-4 border-t border-gray-200 dark:border-gray-800 space-y-4">
+    <div className="p-4 border-t border-gray-200 dark:border-gray-800 space-y-4">
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-xl bg-white dark:bg-[#1E1E1E] border-2 border-gray-900 dark:border-gray-700 text-[#1C1C1C] dark:text-white flex items-center justify-center font-bold text-lg shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.2)]">
           {(user?.userName || user?.username || "U")[0].toUpperCase()}
@@ -156,14 +157,14 @@ function HeaderRightContent() {
       )}
 
       {/* 🔖 Study Queue / Cart Sheet Trigger */}
-      <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
+      {/* <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
         <Button
           onClick={() => setOpenCartSheet(true)}
           variant="outline"
           size="icon"
           className="relative rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1A1A1A] hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer shadow-sm"
         >
-          <ShoppingCart className="w-4 h-4 text-[#1C1C1C] dark:text-gray-200" />
+          <Bookmark className="w-4 h-4 text-[#1C1C1C] dark:text-gray-200" />
           {cartproductList && cartproductList.length > 0 && (
             <span className="absolute -top-1.5 -right-1.5 bg-[#22C55E] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
               {cartproductList.length}
@@ -176,7 +177,7 @@ function HeaderRightContent() {
           cartItems={cartproductList}
           setOpenCartSheet={setOpenCartSheet}
         />
-      </Sheet>
+      </Sheet> */}
 
       {/* User Avatar with Dropdown */}
       {isAuthenticated ? (
@@ -216,7 +217,7 @@ function HeaderRightContent() {
         </DropdownMenu>
       ) : (
         <Link to="/auth/login">
-          <Button className="bg-[#1C1C1C] hover:bg-black dark:bg-white dark:text-black dark:hover:bg-gray-200 text-white text-xs font-bold rounded-xl px-4 py-2 h-9 border border-gray-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all">
+          <Button className="m-2 bg-[#1C1C1C] hover:bg-black dark:bg-white dark:text-black dark:hover:bg-gray-200 text-white text-xs font-bold rounded-xl px-4 py-2 h-9 border border-gray-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all">
             Login
           </Button>
         </Link>
@@ -230,7 +231,7 @@ function ShoppingViewHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-gray-200/80 dark:border-gray-800 bg-[#FAF8F5]/90 dark:bg-[#111111]/90 backdrop-blur supports-[backdrop-filter]:bg-[#FAF8F5]/80 dark:supports-[backdrop-filter]:bg-[#111111]/80 transition-colors">
+    <header className="sticky top-0 z-40 w-full border-b border-gray-200/80 dark:border-gray-800 bg-[#FAF8F5]/90 dark:bg-[#111111]/90 backdrop-blur supports-[backdrop-filter]:bg-[#FAF8F5]/80 dark:supports-[backdrop-filter]:bg-[#000000]/96 transition-colors">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6 mx-auto">
         {/* Left: Brand Logo with 100% Free pill */}
         <Link to="/" className="flex items-center gap-2">
@@ -274,7 +275,7 @@ function ShoppingViewHeader() {
                   </SheetTitle>
                 </SheetHeader>
 
-                <div className="mt-8">
+                <div className="m-8">
                   <MenuItems setOpen={setOpen} />
                 </div>
               </div>
